@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Attendance Recorder</title>
+    <style>
+        /* Set default font and margin for body */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        /* Center the div containing the form */
+        div {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        label {
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        /* Style the input and button elements */
+        input[type="text"],
+        button {
+            font-size: 1em;
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Style the Submit button */
+        #inputroll {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Style the Copy text and Reset buttons */
+        button:not(#inputroll) {
+            background-color: #f2f2f2;
+            color: black;
+        }
+
+        /* Style the Sorted roll numbers input */
+        #output {
+            background-color: #f2f2f2;
+            color: black;
+            border: none;
+        }
+    </style>>
+    <script>
+        output = "";
+
+        function sorter() {
+            var inp = document.getElementById("input").value;
+            console.log("value of inp = " + inp);
+            var numbers = []
+            numbers = inp.split(" ");
+
+            intnumbers = []
+
+            numbers.forEach(element => {
+                intnumbers.push(parseInt(element));
+            });
+
+            intnumbers.sort(function (a, b) { return (+a) - (+b); });
+
+            function removeDuplicates(arr) {
+                return arr.filter((item, index) => arr.indexOf(item) === index);
+            }
+
+            intnumbers = removeDuplicates(intnumbers);
+
+            intnumbers.forEach(element => {
+                output += element.toString() + " ";
+            });
+
+            var out = document.getElementById("output").value = output;
+
+            numbers = [];
+        }
+
+        function copyToClipboard() {
+            var copyText = document.getElementById("output");
+
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+
+            navigator.clipboard.writeText(copyText.value);
+        }
+
+        function resetField() {
+            var temp = document.getElementById("output");
+            temp.value = "";
+        }
+
+    </script>
+</head>
+
+<body>
+    <div>
+
+        <label for="input">Enter roll numbers = </label>
+        <input type="text" id="input" name="input"><br>
+        <button id="inputroll" name="inputroll" onclick="sorter()">Submit</button><br><br>
+        <label for="output">Sorted roll numbers = </label>
+        <input type="text" id="output" name="output"><br>
+        <button onclick="copyToClipboard()">Copy text</button>
+        <button onclick="resetField()">Reset</button>
+
+    </div>
+</body>
+
+</html>
